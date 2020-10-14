@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useCallback } from 'react';
+import store from './redux';
 import './App.css';
+import Counter from './Counter';
 
-function App() {
+const App = () => {
+
+  const handleIncrementCounter = useCallback(() => {
+    store.dispatch({ type: 'INCREMENT' })
+  }, []);
+
+  const handleDecrementCounter = useCallback(() => {
+    store.dispatch({ type: 'DECREMENT'})
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Counter 
+      onIncrement={handleIncrementCounter}
+      onDecrement={handleDecrementCounter} 
+      value={store.getState()} 
+    />
+  )
 }
 
 export default App;
